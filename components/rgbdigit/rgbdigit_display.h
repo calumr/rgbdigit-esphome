@@ -65,6 +65,7 @@ class RGBDigitDisplay : public PollingComponent {
     std::function<void(RGBDigitDisplay &)> writer_;
 };
 
+Color hsv_to_rgb(uint8_t hue, uint8_t sat, uint8_t val);
 void rainbow_colours(RGBDigitDisplay &display, float intensity, uint8_t brightness);
 void random_colours(RGBDigitDisplay &display, uint8_t brightness);
 void fade_colours(RGBDigitDisplay &display);
