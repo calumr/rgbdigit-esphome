@@ -12,12 +12,12 @@ display:
     - platform: rgbdigit
     pin: 4
     num_digits: 4
-    update_interval: 1s
+    update_interval: 0.1s
     lambda: |-
         const auto now = id(sntp_time).now();
         const char * fmt = now.second % 2 ? "%l.%M" : "%l%M";
         it.strftime(Color::WHITE, fmt, now);
-        update_colours(it, rgbdigit::Rainbow, 4.0f, 255);
+        rainbow_colours(it, 4.0f, 255);
 ```
 
 ## Configuration variables:
