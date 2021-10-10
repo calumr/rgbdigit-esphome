@@ -52,6 +52,9 @@ class RGBDigitDisplay : public PollingComponent {
     void set_color(unsigned int digit, const Color &color);
     void set_color(unsigned int digit, byte segment, const Color &color);
 
+    Color default_color();
+    void set_default_color(const Color &color);
+
     void display();
 
    protected:
@@ -61,7 +64,7 @@ class RGBDigitDisplay : public PollingComponent {
     GPIOPin *pin_ = nullptr;
     uint16_t num_digits_ = 0;
     Adafruit_NeoPixel *controller_ = nullptr;
-
+    Color default_color_ = Color::WHITE;
     std::function<void(RGBDigitDisplay &)> writer_;
 };
 

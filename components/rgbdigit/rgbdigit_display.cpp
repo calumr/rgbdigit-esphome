@@ -225,13 +225,17 @@ void RGBDigitDisplay::set_color(unsigned int digit, byte segment, const Color &c
     }
 }
 
+Color RGBDigitDisplay::default_color() { return default_color_; }
+
+void RGBDigitDisplay::set_default_color(const Color &color) { default_color_ = color; }
+
 void RGBDigitDisplay::display() { controller_->show(); }
 
-void RGBDigitDisplay::setPattern(byte pattern, unsigned int digit, uint32_t color) {
+void RGBDigitDisplay::setPattern(byte pattern, unsigned int digit, const Color &color) {
     byte bitMask = 1;
     for (int segment = 0; segment < 8; segment++) {
         if (pattern & bitMask)
-            controller_->setPixelColor((digit << 3) + segment, color);
+            controller_->setPixelColor((digit << 3) + segment, color.r, color.g, color.b);
         else
             controller_->setPixelColor((digit << 3) + segment, 0);
         bitMask <<= 1;
