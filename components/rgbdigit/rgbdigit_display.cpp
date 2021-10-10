@@ -168,13 +168,13 @@ void RGBDigitDisplay::print(const Color &color, const char *str) {
                    ((data & 0x1) ? 0x40 : 0);    // G
             if (*str == '.') {
                 if (digit != 0) digit--;
-                controller_->setPixelColor((digit << 3) + 7, color.raw_32);
+                controller_->setPixelColor((digit << 3) + 7, color.r, color.g, color.b);
             } else {
                 if (digit >= num_digits_) {
                     ESP_LOGE(TAG, "String is too long for the display!");
                     break;
                 }
-                setPattern(data, digit, color.raw_32);
+                setPattern(data, digit, color);
             }
             digit++;
         }
@@ -221,7 +221,7 @@ void RGBDigitDisplay::set_color(unsigned int digit, const Color &color) {
 void RGBDigitDisplay::set_color(unsigned int digit, byte segment, const Color &color) {
     const int pixel = (digit << 3) + segment;
     if (controller_->getPixelColor(pixel)) {
-        controller_->setPixelColor((digit << 3) + segment, color.raw_32);
+        controller_->setPixelColor((digit << 3) + segment, color.r, color.g, color.b);
     }
 }
 

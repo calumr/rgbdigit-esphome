@@ -58,7 +58,7 @@ class RGBDigitDisplay : public PollingComponent {
     void display();
 
    protected:
-    void setPattern(byte pattern, unsigned int digit, uint32_t c);
+    void setPattern(byte pattern, unsigned int digit, const Color &color);
     void call_writer() { this->writer_(*this); }
 
     GPIOPin *pin_ = nullptr;
