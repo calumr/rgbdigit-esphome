@@ -1,5 +1,7 @@
 # RGBDigit numeric display
 
+![image](https://user-images.githubusercontent.com/1751/137870176-6a7662f3-018c-4337-9a5c-3de335f81fc3.png)
+
 A component for [ESPHome](https://esphome.io/index.html) that enables use of the [RGBDigit](https://www.rgbdigit.com/). Similar to a [TM1637](https://esphome.io/components/display/tm1637.html), but with RGB color for each segment.
 
 Example:
