@@ -3,6 +3,7 @@
 #include "esphome/core/color.h"
 #include "esphome/core/component.h"
 #include "esphome/core/defines.h"
+#include "esphome/core/gpio.h"
 
 #ifdef USE_TIME
 #include "esphome/components/time/real_time_clock.h"
@@ -19,7 +20,7 @@ class RGBDigitDisplay : public PollingComponent {
         this->writer_ = std::move(writer);
     }
 
-    void set_pin_and_digits(GPIOPin *pin, uint16_t num_digits) {
+    void set_pin_and_digits(InternalGPIOPin *pin, uint16_t num_digits) {
         pin_ = pin;
         num_digits_ = num_digits;
     }
@@ -61,7 +62,7 @@ class RGBDigitDisplay : public PollingComponent {
     void setPattern(byte pattern, unsigned int digit, const Color &color);
     void call_writer() { this->writer_(*this); }
 
-    GPIOPin *pin_ = nullptr;
+    InternalGPIOPin *pin_ = nullptr;
     uint16_t num_digits_ = 0;
     Adafruit_NeoPixel *controller_ = nullptr;
     Color default_color_ = Color::WHITE;
