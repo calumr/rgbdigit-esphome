@@ -325,7 +325,7 @@ void rainbow_colours(RGBDigitDisplay &display, float intensity, uint8_t brightne
 void random_colours(RGBDigitDisplay &display, uint8_t brightness) {
     for (unsigned int d = 0; d < display.get_num_digits(); ++d) {
         for (byte s = 0; s < 8; ++s) {
-            const auto color = hsv_to_rgb(fast_random_8(), 255, brightness);
+            const auto color = hsv_to_rgb(random_uint32() & 0xff, 255, brightness);
             display.set_color(d, s, color);
         }
     }
