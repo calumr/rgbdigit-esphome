@@ -306,19 +306,33 @@ Color hsv_to_rgb(uint8_t hue, uint8_t sat, uint8_t val) {
     return rgb;
 }
 
+void rainbow_colours_digit(RGBDigitDisplay &display, int digit, float baseHue, float divisor, uint8_t brightness) {
+    const float sToOffset[8] = {0.5, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 1.0};
+
+    for (byte s = 0; s < 8; ++s) {
+        const float offset =
+            (sToOffset[s] + baseHue) / divisor;
+        float _;
+        const float hue = std::modf(offset, &_);
+        const auto color = hsv_to_rgb(hue * 255, 255, brightness);
+        display.set_color(digit, s, color);
+    }
+}
+
 void rainbow_colours(RGBDigitDisplay &display, float intensity, uint8_t brightness) {
     const auto now = millis();
-    const float sToOffset[8] = {0.5, 1.0, 1.0, 0.5, 0.0, 0.0, 0.5, 1.0};
     const float rainbowOffset = now * intensity / 1000.0;
     for (unsigned int d = 0; d < display.get_num_digits(); ++d) {
-        for (byte s = 0; s < 8; ++s) {
-            const float offset =
-                (d + sToOffset[s] + rainbowOffset) / (display.get_num_digits() * 3);
-            float _;
-            const float hue = std::modf(offset, &_);
-            const auto color = hsv_to_rgb(hue * 255, 255, brightness);
-            display.set_color(d, s, color);
-        }
+        rainbow_colours_digit(display, d, d + rainbowOffset, 12, brightness);
+    }
+}
+
+void split_rainbow_colours(RGBDigitDisplay &display, float intensity, uint8_t brightness) {
+    const auto now = millis();
+    const float rainbowOffset = now * intensity / 1000.0;
+    for (unsigned int d = 0; d < display.get_num_digits(); ++d) {
+        const float hue = d + rainbowOffset + ((d > 1) ? 6 : 0);
+        rainbow_colours_digit(display, d, hue, 12, brightness);
     }
 }
 
