@@ -331,9 +331,9 @@ void split_rainbow_colours(RGBDigitDisplay &display, float intensity, uint8_t br
     const auto now = millis();
     const float rainbowOffset = now * intensity / 1000.0;
     for (unsigned int d = 0; d < display.get_num_digits(); ++d) {
-        const float hue = d + rainbowOffset + ((d > 1) ? 6 : 0);
-        rainbow_colours_digit(display, d, hue, 12, brightness);
-    }
+        const float baseHue = d + rainbowOffset + ((d > 1) ? 6 : 0);
+        const float hue = baseHue + ((d > 1) ? rainbowOffset * 1.1f : 0.0f);
+        rainbow_colours_digit(display, d, hue, 12, brightness);    }
 }
 
 void random_colours(RGBDigitDisplay &display, uint8_t brightness) {
