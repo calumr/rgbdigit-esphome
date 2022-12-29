@@ -333,7 +333,31 @@ void split_rainbow_colours(RGBDigitDisplay &display, float intensity, uint8_t br
     for (unsigned int d = 0; d < display.get_num_digits(); ++d) {
         const float baseHue = d + rainbowOffset + ((d > 1) ? 6 : 0);
         const float hue = baseHue + ((d > 1) ? rainbowOffset * 1.1f : 0.0f);
-        rainbow_colours_digit(display, d, hue, 12, brightness);    }
+        rainbow_colours_digit(display, d, hue, 12, brightness);
+    }
+}
+
+void random_colours_digit(RGBDigitDisplay &display, int digit, float baseHue, float divisor, uint8_t brightness) {
+    const float sToOffset[8] = {0.96, 0.88, 0.35, 0.52, 0.73, 0.71, 0.22, 0.46};
+
+    for (byte s = 0; s < 8; ++s) {
+        const float offset =
+            (sToOffset[s] + baseHue) / divisor;
+        float _;
+        const float hue = std::modf(offset, &_);
+        const auto color = hsv_to_rgb(hue * 255, 255, brightness);
+        display.set_color(digit, s, color);
+    }
+}
+
+void segmentish_colours(RGBDigitDisplay &display, float intensity, uint8_t brightness) {
+    const auto now = millis();
+    const float rainbowOffset = now * intensity / 10000.0;
+    for (unsigned int d = 0; d < display.get_num_digits(); ++d) {
+        const float baseHue = d + rainbowOffset + ((d > 1) ? 6 : 0);
+        const float hue = baseHue + ((d > 1) ? rainbowOffset * 1.1f : 0.0f);
+        random_colours_digit(display, d, hue, 4, brightness);
+    }
 }
 
 void random_colours(RGBDigitDisplay &display, uint8_t brightness) {
