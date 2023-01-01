@@ -354,9 +354,9 @@ void segmentish_colours(RGBDigitDisplay &display, float intensity, uint8_t brigh
     const auto now = millis();
     const float rainbowOffset = now * intensity / 10000.0;
     for (unsigned int d = 0; d < display.get_num_digits(); ++d) {
-        const float baseHue = d + rainbowOffset + ((d > 1) ? 6 : 0);
+        const float baseHue = (2 * d) + rainbowOffset + ((d > 1) ? 6 : 0);
         const float hue = baseHue + ((d > 1) ? rainbowOffset * 1.1f : 0.0f);
-        random_colours_digit(display, d, hue, 4, brightness);
+        random_colours_digit(display, d, hue, 8, brightness);
     }
 }
 
